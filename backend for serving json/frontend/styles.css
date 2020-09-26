@@ -1,0 +1,52 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  height: 100px;
+  box-sizing: border-box;
+  background-color: black;
+  color: white;
+  font-family: sans-serif;
+  text-align: center;
+  font-size: 35px;
+  padding: 24px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 100px 1fr 100px;
+}
+
+.wrapper {
+  grid-column: 2 / 3;
+}
+
+input {
+  border: none;
+  border-bottom: 5px solid black;
+  width: 500px;
+  margin: 5px;
+}
+
+.score {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+#check,
+#next {
+  border: none;
+  margin-top: 10px;
+  padding: 10px 20px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+#showResult {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: sans-serif;
+}
