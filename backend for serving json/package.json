@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "apiserve",
   "version": "1.0.0",
-  "description": "test app",
+  "description": "serve api",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
