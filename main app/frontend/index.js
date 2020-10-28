@@ -4,7 +4,6 @@ var jsonData;
 let index = 0;
 let numofQns;
 let score = 0;
-let loading = true;
 
 function checkAns(event, answer) {
   event.preventDefault();
