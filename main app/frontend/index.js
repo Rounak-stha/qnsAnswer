@@ -4,6 +4,7 @@ var jsonData;
 let index = 0;
 let numofQns;
 let score = 0;
+let loading = true;
 
 function checkAns(event, answer) {
   event.preventDefault();
@@ -46,7 +47,7 @@ function loadNextForm(e) {
 function loadForm(jsonData) {
   if (index == numofQns)
   {
-    document.querySelector(".wrapper").innerHTML = `<p style="font-size: 50px; font-weight: 1000;">Your socre is ${score}</p>`
+    document.querySelector(".wrapper").innerHTML = `<p style="font-size: 50px; font-weight: 1000;">Your socre is ${score}</p>`;
   }
   let answer = jsonData[index].answer;
   document.getElementById("question").textContent = jsonData[index].question;
@@ -68,6 +69,7 @@ function loadForm(jsonData) {
 }
 
 async function loadJson() {
+  document.getElementById("question").innerHTML = `<p style="font-size: 50px; font-weight: 1000;">Loading........</p>`;
   await fetch("http://127.0.0.1:5000/api/quiz")
     .then((response) => response.json())
     .then((data) => {
