@@ -1,27 +1,37 @@
 window.onload = loadJson;
 var checked = false;
 var jsonData;
+let index = 0;
+let numofQns;
+let score = 0;
 
 function checkAns(event, answer) {
   event.preventDefault();
+  let userAns = document.getElementById("answer").value;
+  if (userAns.length == 0) return
+  let isTrue = false;
+
   if (!checked) {
-    let userAns = document.getElementById("answer").value;
     userAns = userAns.toLowerCase();
     answer = answer.toLowerCase();
     if (answer === userAns) {
+      isTrue = true;
       let prevScore = parseInt(document.getElementById("score").textContent);
       document.getElementById("score").textContent = prevScore + 1;
       document.getElementById("input").innerHTML = ``;
-      let p = document.createElement("p");
-      p.textContent = "You did it";
-      document.getElementById("showResult").appendChild(p);
-      let nextBtn = document.createElement("button");
-      nextBtn.setAttribute("id", "next");
-      nextBtn.textContent = "Next";
-      document.getElementById("showResult").appendChild(nextBtn);
-      document.getElementById("next").addEventListener("click", loadNextForm);
       checked = true;
-    } else console.log("fucking dumb shit");
+      score = prevScore + 1;
+    } 
+
+    let p = document.createElement("p");
+    p.textContent = isTrue ? "You did it" : "!!! Wrong Answer !!!";
+    document.getElementById("showResult").appendChild(p);
+    let nextBtn = document.createElement("button");
+    nextBtn.setAttribute("id", "next");
+    nextBtn.textContent = "Next";
+    document.getElementById("showResult").appendChild(nextBtn);
+    document.getElementById("next").addEventListener("click", loadNextForm);
+    document.getElementById("input").innerHTML = '';
   }
 }
 
@@ -29,11 +39,15 @@ function loadNextForm(e) {
   e.preventDefault();
   checked = false;
   document.getElementById("showResult").innerHTML = "";
+  numofQns = jsonData.length - 1; // count from zero 
   loadForm(jsonData);
 }
 
 function loadForm(jsonData) {
-  let index = Math.floor(Math.random() * 5);
+  if (index == numofQns)
+  {
+    document.querySelector(".wrapper").innerHTML = `<p style="font-size: 50px; font-weight: 1000;">Your socre is ${score}</p>`
+  }
   let answer = jsonData[index].answer;
   document.getElementById("question").textContent = jsonData[index].question;
   let form = document.createElement("form");
@@ -50,10 +64,11 @@ function loadForm(jsonData) {
   div.appendChild(btn);
   form.appendChild(div);
   form.addEventListener("submit", (e) => checkAns(e, answer));
+  index += 1;
 }
 
 async function loadJson() {
-  await fetch("https://stark-citadel-14131.herokuapp.com/api/quiz")
+  await fetch("http://127.0.0.1:5000/api/quiz")
     .then((response) => response.json())
     .then((data) => {
       jsonData = data;
